@@ -18,12 +18,12 @@ const config: Config = {
   url: 'https://gabehamasaki.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/hikari-go/',
+  baseUrl: '/hikari-docs/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'gabehamasaki', // Usually your GitHub org/user name.
-  projectName: 'hikari-go', // Usually your repo name.
+  projectName: 'hikari-docs', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -55,7 +55,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/gabehamasaki/hikari-go/tree/main/docs/',
+            'https://github.com/gabehamasaki/hikari-docs/tree/main/',
         },
         blog: {
           showReadingTime: true,
@@ -66,7 +66,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/gabehamasaki/hikari-go/tree/main/docs/',
+            'https://github.com/gabehamasaki/hikari-docs/tree/main/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
