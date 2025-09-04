@@ -6,25 +6,168 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  /* Hikari Theme - Inspired by Rocketseat - Light Mode */
+  --ifm-color-primary: #8257e5;
+  --ifm-color-primary-dark: #7343d3;
+  --ifm-color-primary-darker: #6b38c4;
+  --ifm-color-primary-darkest: #582ea2;
+  --ifm-color-primary-light: #916bf7;
+  --ifm-color-primary-lighter: #a080f8;
+  --ifm-color-primary-lightest: #c4b3fb;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(130, 87, 229, 0.1);
+  
+  /* Custom Rocketseat-inspired variables */
+  --hikari-primary: #8257e5;
+  --hikari-primary-dark: #633bbc;
+  --hikari-secondary: #04d361;
+  --hikari-gradient: linear-gradient(135deg, #8257e5 0%, #633bbc 100%);
+  --hikari-text-gradient: linear-gradient(135deg, #8257e5 0%, #633bbc 50%, #04d361 100%);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  /* Hikari Theme - Dark Mode */
+  --ifm-color-primary: #916bf7;
+  --ifm-color-primary-dark: #8257e5;
+  --ifm-color-primary-darker: #7343d3;
+  --ifm-color-primary-darkest: #6b38c4;
+  --ifm-color-primary-light: #a080f8;
+  --ifm-color-primary-lighter: #c4b3fb;
+  --ifm-color-primary-lightest: #e0d6fd;
+  --docusaurus-highlighted-code-line-bg: rgba(145, 107, 247, 0.15);
+}
+
+/* Hikari Styles - Inspired by Rocketseat */
+
+/* Hero section with modern gradient */
+.hero {
+  background: linear-gradient(135deg, #8257e5 0%, #633bbc 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+  z-index: 1;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__title {
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1rem;
+}
+
+.hero__subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+  font-size: 1.25rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Modern buttons */
+.button--primary {
+  background: var(--hikari-gradient);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(130, 87, 229, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.button--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(130, 87, 229, 0.4);
+  color: white;
+  background: linear-gradient(135deg, #7343d3 0%, #582ea2 100%);
+}
+
+/* Cards with modern design */
+.card {
+  border: 1px solid rgba(130, 87, 229, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: white;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(130, 87, 229, 0.1);
+  border-color: rgba(130, 87, 229, 0.2);
+}
+
+[data-theme='dark'] .card {
+  background: var(--ifm-background-surface-color);
+  border-color: rgba(145, 107, 247, 0.2);
+}
+
+[data-theme='dark'] .card:hover {
+  box-shadow: 0 20px 40px rgba(145, 107, 247, 0.2);
+}
+
+/* Navbar with glass effect */
+.navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(130, 87, 229, 0.1);
+  box-shadow: 0 2px 20px rgba(130, 87, 229, 0.1);
+}
+
+[data-theme='dark'] .navbar {
+  background: rgba(24, 25, 26, 0.95);
+  border-bottom: 1px solid rgba(145, 107, 247, 0.2);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Feature icons and titles */
+.col h3 {
+  color: var(--ifm-color-primary);
+  font-weight: 700;
+}
+
+/* Links with hover effect */
+.navbar__link:hover,
+.footer__link-item:hover {
+  color: var(--ifm-color-primary);
+  transition: color 0.2s ease;
+}
+
+/* Code blocks */
+.prism-code {
+  border-radius: 8px;
+  border: 1px solid rgba(130, 87, 229, 0.1);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .hero__title {
+    font-size: 2rem;
+  }
+  
+  .hero__subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .button--primary {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.85rem;
+  }
 }
