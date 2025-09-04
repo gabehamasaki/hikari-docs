@@ -1,0 +1,54 @@
+go:
+  label: Go
+  permalink: /go
+  description: Go programming language
+
+web-framework:
+  label: Web Framework
+  permalink: /web-framework
+  description: Web framework development and design
+
+hikari:
+  label: Hikari
+  permalink: /hikari
+  description: Hikari web framework for Go
+
+performance:
+  label: Performance
+  permalink: /performance
+  description: Performance optimization and benchmarks
+
+api:
+  label: API
+  permalink: /api
+  description: API development and design
+
+tutorial:
+  label: Tutorial
+  permalink: /tutorial
+  description: Tutorials and guides
+
+examples:
+  label: Examples
+  permalink: /examples
+  description: Code examples and demonstrations
+
+facebook:
+  label: Facebook
+  permalink: /facebook
+  description: Facebook tag description
+
+hello:
+  label: Hello
+  permalink: /hello
+  description: Hello tag description
+
+docusaurus:
+  label: Docusaurus
+  permalink: /docusaurus
+  description: Docusaurus tag description
+
+hola:
+  label: Hola
+  permalink: /hola
+  description: Hola tag description
