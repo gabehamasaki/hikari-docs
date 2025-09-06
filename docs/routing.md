@@ -36,7 +36,7 @@ v1Group := app.Group("/api/v1")
 {
     v1Group.GET("/health", healthHandler)
     v1Group.GET("/version", versionHandler)
-    
+
     // Users resource group
     usersGroup := v1Group.Group("/users")
     {
@@ -46,7 +46,7 @@ v1Group := app.Group("/api/v1")
         usersGroup.PUT("/:id", updateUser)   // PUT /api/v1/users/:id
         usersGroup.DELETE("/:id", deleteUser) // DELETE /api/v1/users/:id
     }
-    
+
     // Posts resource group
     postsGroup := v1Group.Group("/posts")
     {
@@ -70,7 +70,7 @@ v1Group := app.Group("/api/v1", rateLimitMiddleware)
 {
     // Public endpoints (only rate limiting)
     v1Group.GET("/health", healthHandler)
-    
+
     // Auth group - public auth endpoints
     authGroup := v1Group.Group("/auth")
     {
@@ -78,13 +78,13 @@ v1Group := app.Group("/api/v1", rateLimitMiddleware)
         authGroup.POST("/register", registerHandler)
         authGroup.POST("/logout", logoutHandler, authMiddleware) // Only logout needs auth
     }
-    
+
     // Protected group - requires authentication
     protectedGroup := v1Group.Group("/protected", authMiddleware)
     {
         protectedGroup.GET("/profile", getProfile)
         protectedGroup.PUT("/profile", updateProfile)
-        
+
         // Admin group - requires auth + admin role
         adminGroup := protectedGroup.Group("/admin", adminMiddleware)
         {
@@ -217,7 +217,7 @@ Apply middleware to specific routes:
 app.GET("/public", publicHandler, loggingMiddleware)
 
 // Multiple middleware on a single route
-app.POST("/admin/users", 
+app.POST("/admin/users",
     createUserHandler,
     authMiddleware,
     adminMiddleware,
@@ -309,7 +309,7 @@ func authMiddleware(next hikari.HandlerFunc) hikari.HandlerFunc {
 func rateLimitMiddleware(next hikari.HandlerFunc) hikari.HandlerFunc {
     return func(c *hikari.Context) {
         clientIP := c.Request.RemoteAddr
-        
+
         if isRateLimited(clientIP) {
             c.JSON(http.StatusTooManyRequests, hikari.H{
                 "error": "Rate limit exceeded",
@@ -329,14 +329,14 @@ func rateLimitMiddleware(next hikari.HandlerFunc) hikari.HandlerFunc {
 func loggingMiddleware(next hikari.HandlerFunc) hikari.HandlerFunc {
     return func(c *hikari.Context) {
         start := time.Now()
-        
+
         next(c) // Execute handler
-        
+
         // Log after handler execution
         duration := time.Since(start)
-        fmt.Printf("Request: %s %s - %d - %v\n", 
-            c.Method(), c.Request.URL.Path, 
-            c.Writer.(*hikari.ResponseWriter).Status(), 
+        fmt.Printf("Request: %s %s - %d - %v\n",
+            c.Method(), c.Request.URL.Path,
+            c.Writer.(*hikari.ResponseWriter).Status(),
             duration)
     }
 }
@@ -348,7 +348,7 @@ func loggingMiddleware(next hikari.HandlerFunc) hikari.HandlerFunc {
 func adminMiddleware(next hikari.HandlerFunc) hikari.HandlerFunc {
     return func(c *hikari.Context) {
         userRole := c.GetString("user_role") // From previous auth middleware
-        
+
         if userRole != "admin" {
             c.JSON(http.StatusForbidden, hikari.H{
                 "error": "Admin access required",
@@ -390,7 +390,7 @@ import (
 
 func serveStatic(c *hikari.Context) {
     requestedPath := c.Wildcard()
-    
+
     if requestedPath == "" {
         c.JSON(http.StatusBadRequest, hikari.H{
             "error": "No file specified",
@@ -452,11 +452,11 @@ staticGroup := app.Group("/assets")
     staticGroup.GET("/css/*", func(c *hikari.Context) {
         c.File("./static/css/" + c.Wildcard())
     })
-    
+
     staticGroup.GET("/js/*", func(c *hikari.Context) {
         c.File("./static/js/" + c.Wildcard())
     })
-    
+
     staticGroup.GET("/images/*", func(c *hikari.Context) {
         c.File("./static/images/" + c.Wildcard())
     })

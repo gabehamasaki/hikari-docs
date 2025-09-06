@@ -594,7 +594,7 @@ app.POST("/api/notify", func(c *hikari.Context) {
         }
         data, _ := json.Marshal(notification)
         hub.Broadcast(data)
-        
+
         c.JSON(http.StatusOK, hikari.H{"status": "sent"})
     } else {
         c.JSON(http.StatusNotFound, hikari.H{"error": "Hub not found"})
@@ -785,14 +785,14 @@ import (
 
 func main() {
     app := hikari.New(":8080")
-    
+
     // Configure request timeout based on environment
     if os.Getenv("ENV") == "production" {
         app.SetRequestTimeout(30 * time.Second)
     } else {
         app.SetRequestTimeout(60 * time.Second) // More lenient for development
     }
-    
+
     // Production WebSocket config
     wsConfig := &hikari.WebSocketConfig{
         ReadBufferSize:    8192,
@@ -816,9 +816,9 @@ func main() {
         PongTimeout:       60 * time.Second,
     }
     app.WithWebSocket(wsConfig)
-    
+
     // Your routes here...
-    
+
     app.ListenAndServe()
 }
 ```
@@ -860,7 +860,7 @@ v1Group := app.Group("/api/v1", authMiddleware)
 {
     v1Group.GET("/users", usersHandler)
     v1Group.GET("/posts", postsHandler)
-    
+
     adminGroup := v1Group.Group("/admin", adminMiddleware)
     {
         adminGroup.GET("/stats", statsHandler)  // Inherits auth + admin middleware

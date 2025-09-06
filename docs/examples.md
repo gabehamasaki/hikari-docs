@@ -96,7 +96,7 @@ func createUser(c *hikari.Context) {
         c.JSON(http.StatusBadRequest, hikari.H{"error": err.Error()})
         return
     }
-    
+
     newUser.ID = len(users) + 1
     users = append(users, newUser)
     c.JSON(http.StatusCreated, newUser)
@@ -146,12 +146,12 @@ func corsMiddleware(next hikari.HandlerFunc) hikari.HandlerFunc {
         c.SetHeader("Access-Control-Allow-Origin", "*")
         c.SetHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
         c.SetHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
-        
+
         if c.Method() == "OPTIONS" {
             c.Status(http.StatusOK)
             return
         }
-        
+
         next(c)
     }
 }
@@ -219,7 +219,7 @@ func chatHandler(c *hikari.WSContext) {
         var msg ChatMessage
         if err := c.Bind(&msg); err == nil {
             msg.Time = time.Now().Format("15:04:05")
-            
+
             switch msg.Type {
             case "join":
                 joinMsg := ChatMessage{
@@ -229,11 +229,11 @@ func chatHandler(c *hikari.WSContext) {
                     Time:     msg.Time,
                 }
                 c.BroadcastJSON(joinMsg)
-                
+
             case "message":
                 // Broadcast message to all connections
                 c.BroadcastJSON(msg)
-                
+
             case "leave":
                 leaveMsg := ChatMessage{
                     Type:     "user_left",
@@ -289,7 +289,7 @@ func chatHandler(c *hikari.WSContext) {
             // Add timestamp and room info
             msg["timestamp"] = time.Now().Unix()
             msg["room"] = c.HubName()
-            
+
             c.BroadcastJSON(msg)
         }
     }
@@ -303,7 +303,7 @@ func vipChatHandler(c *hikari.WSContext) {
             msg["timestamp"] = time.Now().Unix()
             msg["room"] = c.HubName()
             msg["vip"] = true // Mark as VIP message
-            
+
             c.BroadcastJSON(msg)
         }
     }
@@ -347,13 +347,13 @@ func sendMessage(c *hikari.Context) {
             c.JSON(http.StatusBadRequest, hikari.H{"error": err.Error()})
             return
         }
-        
+
         msg["source"] = "api"
         msg["timestamp"] = time.Now().Unix()
-        
+
         data, _ := json.Marshal(msg)
         hub.Broadcast(data)
-        
+
         c.JSON(http.StatusOK, hikari.H{"status": "sent"})
     } else {
         c.JSON(http.StatusNotFound, hikari.H{"error": "Room not found"})
@@ -410,14 +410,14 @@ func requestLoggingMiddleware() hikari.Middleware {
     return func(next hikari.HandlerFunc) hikari.HandlerFunc {
         return func(c *hikari.Context) {
             start := time.Now()
-            
+
             next(c)
-            
+
             duration := time.Since(start)
-            fmt.Printf("[%s] %s %s - %v\n", 
+            fmt.Printf("[%s] %s %s - %v\n",
                 time.Now().Format("2006/01/02 15:04:05"),
-                c.Method(), 
-                c.Request.URL.Path, 
+                c.Method(),
+                c.Request.URL.Path,
                 duration)
         }
     }
@@ -429,12 +429,12 @@ func corsMiddleware() hikari.Middleware {
             c.SetHeader("Access-Control-Allow-Origin", "*")
             c.SetHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
             c.SetHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
-            
+
             if c.Method() == "OPTIONS" {
                 c.Status(http.StatusOK)
                 return
             }
-            
+
             next(c)
         }
     }
@@ -466,7 +466,7 @@ func authMiddleware() hikari.Middleware {
                 })
                 return
             }
-            
+
             userID, err := validateToken(token)
             if err != nil {
                 c.JSON(http.StatusUnauthorized, hikari.H{
@@ -474,7 +474,7 @@ func authMiddleware() hikari.Middleware {
                 })
                 return
             }
-            
+
             c.Set("user_id", userID)
             next(c)
         }
@@ -501,11 +501,11 @@ func auditMiddleware() hikari.Middleware {
         return func(c *hikari.Context) {
             userID := c.GetString("user_id")
             action := c.Request.URL.Path
-            
+
             // Log admin action before execution
-            fmt.Printf("AUDIT: User %s performing %s %s\n", 
+            fmt.Printf("AUDIT: User %s performing %s %s\n",
                 userID, c.Method(), action)
-            
+
             next(c)
         }
     }
@@ -859,7 +859,7 @@ func serveStatic(c *hikari.Context) {
     }
 
     fullPath := filepath.Join(uploadDir, filePath)
-    
+
     // Security check
     absUploadDir, _ := filepath.Abs(uploadDir)
     absFullPath, _ := filepath.Abs(fullPath)
@@ -926,7 +926,7 @@ func main() {
         HandshakeTimeout:  10 * time.Second,
         CheckOrigin: func(r *http.Request) bool {
             origin := r.Header.Get("Origin")
-            return origin == "https://yourdomain.com" || 
+            return origin == "https://yourdomain.com" ||
                    (os.Getenv("ENV") == "development" && origin == "http://localhost:3000")
         },
         EnableCompression: true,
@@ -993,7 +993,7 @@ func setupGracefulShutdown(app *hikari.App) {
     go func() {
         <-c
         fmt.Println("\n🛑 Shutting down gracefully...")
-        
+
         ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
         defer cancel()
 

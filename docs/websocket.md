@@ -58,10 +58,10 @@ func chatHandler(c *hikari.WSContext) {
     if c.IsTextMessage() {
         // Obter mensagem como string
         message := c.GetMessage()
-        
+
         // Enviar de volta para o cliente
         c.Send([]byte("Echo: " + message))
-        
+
         // Ou broadcast para todos no hub
         c.Broadcast([]byte("Broadcast: " + message))
     }
@@ -78,18 +78,18 @@ O `WSContext` estende o contexto padrão com métodos específicos para WebSocke
 func chatHandler(c *hikari.WSContext) {
     // Enviar bytes brutos
     c.Send([]byte("Mensagem simples"))
-    
+
     // Enviar JSON
     response := map[string]string{"type": "message", "text": "Olá!"}
     c.JSON(response)
-    
+
     // Enviar string
     c.String("Mensagem de texto")
-    
+
     // Broadcast para todos no hub
     c.Broadcast([]byte("Mensagem para todos"))
     c.BroadcastJSON(map[string]string{"event": "user_joined"})
-    
+
     // Enviar para conexão específica
     c.SendToConnection("conn_id_123", []byte("Mensagem privada"))
 }
@@ -107,7 +107,7 @@ func chatHandler(c *hikari.WSContext) {
         data := c.GetBinaryMessage()
         // Processar dados binários
     }
-    
+
     // Bind JSON para struct
     var msg ChatMessage
     if err := c.Bind(&msg); err == nil {
@@ -122,13 +122,13 @@ func chatHandler(c *hikari.WSContext) {
 func chatHandler(c *hikari.WSContext) {
     // ID único da conexão
     connectionID := c.ConnectionID()
-    
+
     // Nome do hub
     hubName := c.HubName()
-    
+
     // Request HTTP original
     request := c.Request()
-    
+
     // Headers da requisição
     userAgent := request.Header.Get("User-Agent")
 }
@@ -147,10 +147,10 @@ func main() {
 
     // Chat geral
     app.WebSocket("/ws/general", "general", generalChatHandler)
-    
-    // Chat de tecnologia  
+
+    // Chat de tecnologia
     app.WebSocket("/ws/tech", "tech", techChatHandler)
-    
+
     // Sala VIP com middleware de autenticação
     app.WebSocket("/ws/vip", "vip", vipChatHandler, authMiddleware)
 
@@ -164,7 +164,7 @@ func main() {
 // Endpoint HTTP para enviar mensagem para um hub
 app.POST("/api/chat/:room/message", func(c *hikari.Context) {
     roomName := c.Param("room")
-    
+
     if hub, exists := app.GetWebSocketHub(roomName); exists {
         message := []byte("Mensagem via API")
         hub.Broadcast(message)
@@ -203,7 +203,7 @@ app.WebSocket("/ws/private", "private", privateHandler, authMiddleware)
 ```go
 wsConfig := &hikari.WebSocketConfig{
     ReadBufferSize:    1024,            // Buffer de leitura (bytes)
-    WriteBufferSize:   1024,            // Buffer de escrita (bytes) 
+    WriteBufferSize:   1024,            // Buffer de escrita (bytes)
     HandshakeTimeout:  10 * time.Second, // Timeout do handshake
     CheckOrigin: func(r *http.Request) bool { // Validação CORS
         origin := r.Header.Get("Origin")
@@ -247,7 +247,7 @@ type ChatMessage struct {
 
 func main() {
     app := hikari.New(":8080")
-    
+
     // Configurar WebSocket
     wsConfig := &hikari.WebSocketConfig{
         ReadBufferSize:    1024,
@@ -264,7 +264,7 @@ func main() {
     app.WebSocket("/ws/general", "general", chatHandler)
     app.WebSocket("/ws/tech", "tech", chatHandler)
     app.WebSocket("/ws/random", "random", chatHandler)
-    
+
     // Sala VIP com autenticação
     app.WebSocket("/ws/vip", "vip", chatHandler, vipAuthMiddleware)
 
@@ -309,11 +309,11 @@ func chatHandler(c *hikari.WSContext) {
                     Message:  msg.Username + " entrou na sala",
                 }
                 c.BroadcastJSON(joinMessage)
-                
+
             case "message":
                 // Rebroadcast a mensagem
                 c.BroadcastJSON(msg)
-                
+
             case "leave":
                 leaveMessage := ChatMessage{
                     Type:     "user_left",
