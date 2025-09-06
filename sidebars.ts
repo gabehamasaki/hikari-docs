@@ -18,8 +18,9 @@ const sidebars: SidebarsConfig = {
     'intro',
     'routing',
     'context',
-    'api',
     'examples',
+    'websocket',
+    'api',
   ],
 
   // But you can create a sidebar manually
